@@ -1,0 +1,7 @@
+.currency-element {
+	display: flex;
+	justify-content: space-between;
+}
+.currency-element p {
+	margin: 0 10px;
+}

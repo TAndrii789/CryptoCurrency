@@ -1,0 +1,35 @@
+.table-box {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin: 10px 8px;
+}
+.table {
+	width: 80vw;
+	height: 90vh;
+	border: 1px solid hsl(198, 100%, 45%);
+	overflow-y: scroll;
+}
+
+.table li {
+	display: flex;
+	/* justify-content: space-between; */
+	border: 1px solid hsl(198, 100%, 45%);
+}
+
+.table-star {
+	width: 20px;
+	height: 20px;
+	margin: 0 7px;
+}
+
+.table header{
+	display: flex;
+	justify-content: space-between;
+	margin: 0 37px;
+}
+
+/* .table ul{
+	display: flex;
+
+} */
