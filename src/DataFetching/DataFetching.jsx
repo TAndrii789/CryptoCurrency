@@ -1,55 +1,86 @@
 import { useEffect, useState } from "react";
 import "./DataFetching.css";
+import star from "/src/assets/star.png";
 
 function DataFetching() {
-	const [data, setData] = useState({
-		rank: "",
-		name: "",
-		price: "",
-		change: "",
-		marketCap: "",
-		volume: "",
-	});
+	const [data, setData] = useState([]);
+	// const [marketCR, setMarketCR] = useState("");
 
 	useEffect(() => {
 		fetch("https://api.coincap.io/v2/assets").then((response) =>
 			response.json().then((apiData) => {
-				setData((d) => ({
-					...d,
-					rank: apiData.data[0].rank,
-					name: apiData.data[0].symbol,
-					price:
-						Math.round(
-							(Number(apiData.data[0].priceUsd) + Number.EPSILON) * 100
-						) / 100,
-					change:
-						Math.round(
-							(Number(apiData.data[0].changePercent24Hr) + Number.EPSILON) * 100
-						) /
-							100 +
-						"%",
-					marketCap:
-						Math.round(
-							(Number(apiData.data[0].marketCapUsd) + Number.EPSILON) * 100
-						) / 100,
-					volume:
-						Math.round(
-							(Number(apiData.data[0].vwap24Hr) + Number.EPSILON) * 100
-						) / 100,
-				}));
+				apiData.data.forEach(coin => {
+console.log(coin.marketCapUsd)
+				let marketCR = Math.round(
+						(Number(coin.marketCapUsd) + Number.EPSILON) * 100
+					) / 100
+	
+
+					const newCoin = {
+						rank: coin.rank,
+						name: coin.symbol + ' ' + coin.name,
+						price:
+							Math.round(
+								(Number(coin.priceUsd) + Number.EPSILON) * 100
+							) / 100,
+						change:
+							Math.round(
+								(Number(coin.changePercent24Hr) + Number.EPSILON) * 100
+							) /
+								100 +
+							"%",
+						marketCap: roundMarketCap(marketCR),					
+						volume:
+							Math.round(
+								(Number(coin.vwap24Hr) + Number.EPSILON) * 100
+							) / 100
+					}
+					
+					setData((d) => ([
+						...d,
+						newCoin
+							]));
+							
+							
+				
+				});
+
 			})
 		);
-	}, []);
+		
+	},[]);
+
+const roundMarketCap = function(item){
+	item = item.toString()
+			if(item.length>=15){
+				item = Number(Math.round(((item/1000000000) + Number.EPSILON) * 100
+				) / 100)
+				return item + 'B'
+			}else if(item.length >= 12) {
+				item = Number(Math.round(((item/1000000) + Number.EPSILON) * 100
+				) / 100);
+				return item + 'M'
+			}else if(item.length >= 9) {
+				item = Number(Math.round(((item/1000) + Number.EPSILON) * 100
+				) / 100)
+				return item + 'K'
+			}
+} 
 
 	return (
-		<div className="currency-element">
-			<p>{data.rank}</p>
-			<p>{data.name}</p>
-			<p>{data.price}</p>
-			<p>{data.change}</p>
-			<p>{data.marketCap}</p>
-			<p>{data.volume}</p>
+	<ul>
+		{data.map((coin, index)=><li key={index} className="currency-element">
+		<div className="currency-rank"><img className="table-star" src={star} />
+		{coin.rank}
 		</div>
+		<p>{coin.name}</p>
+		<p>{coin.price}</p>
+		<p>{coin.change}</p>
+		<p>{coin.marketCap}</p>
+		<p>{coin.volume}</p>
+		
+	</li>)}
+	</ul>
 	);
 }
 

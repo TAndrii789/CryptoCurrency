@@ -11,25 +11,22 @@
 	overflow-y: scroll;
 }
 
-.table li {
-	display: flex;
-	/* justify-content: space-between; */
-	border: 1px solid hsl(198, 100%, 45%);
-}
-
 .table-star {
 	width: 20px;
 	height: 20px;
-	margin: 0 7px;
+	/* margin: 0 7px; */
 }
 
 .table header{
-	display: flex;
-	justify-content: space-between;
-	margin: 0 37px;
+	display: grid;
+	grid-template-columns: repeat(6, 13vw);
+	text-align: center;
 }
 
-/* .table ul{
-	display: flex;
+.table header:first-child{
+	text-align: left;
+	padding-left: 1vw;
+}
 
-} */
+
+
