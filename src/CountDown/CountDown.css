@@ -14,6 +14,7 @@
 	font-size: 1.3rem;
 	font-weight: 400;
 	border: 1px solid hsl(198, 100%, 45%);
+	user-select: none;
 }
 
 .text {
