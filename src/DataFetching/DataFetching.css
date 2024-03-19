@@ -7,7 +7,10 @@
 
 .currency-rank {
 	display: flex;
+}
 
+.currency-rank img {
+	margin-right: 5px;
 }
 
 

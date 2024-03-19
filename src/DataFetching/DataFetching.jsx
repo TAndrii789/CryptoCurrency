@@ -1,20 +1,24 @@
 import { useEffect, useState } from "react";
 import "./DataFetching.css";
+import "../Preloader/Preloader.css"
 import star from "/src/assets/star.png";
+import Prelaoder from "../Preloader/Preloader.jsx";
 
 function DataFetching() {
+	const [isLoading, setIsloading] = useState(false);
 	const [data, setData] = useState([]);
 	// const [marketCR, setMarketCR] = useState("");
 
 	useEffect(() => {
-		fetch("https://api.coincap.io/v2/assets").then((response) =>
+		const fetchCrupto = async () => {
+			setIsloading(true);
+			await fetch("https://api.coincap.io/v2/assets").then((response) =>
 			response.json().then((apiData) => {
 				apiData.data.forEach(coin => {
 console.log(coin.marketCapUsd)
 				let marketCR = Math.round(
 						(Number(coin.marketCapUsd) + Number.EPSILON) * 100
 					) / 100
-	
 
 					const newCoin = {
 						rank: coin.rank,
@@ -40,14 +44,12 @@ console.log(coin.marketCapUsd)
 						...d,
 						newCoin
 							]));
-							
-							
-				
 				});
-
 			})
 		);
-		
+		setIsloading(false);
+	}
+		fetchCrupto();
 	},[]);
 
 const roundMarketCap = function(item){
@@ -66,6 +68,10 @@ const roundMarketCap = function(item){
 				return item + 'K'
 			}
 } 
+
+	if(isLoading) {
+		return <div><Prelaoder /></div>
+}
 
 	return (
 	<ul>
