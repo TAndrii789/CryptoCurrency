@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import "./DataFetching.css";
 import "../Preloader/Preloader.css"
-import star from "/src/assets/star.png";
 import Prelaoder from "../Preloader/Preloader.jsx";
+import star from "/src/assets/star.png";
 
 function DataFetching() {
 	const [isLoading, setIsloading] = useState(false);
@@ -15,10 +15,10 @@ function DataFetching() {
 			setIsloading(true);
 
 	try {
-			await fetch("https://api.coincap.io/v2/assets").then((response) =>
+		await fetch("https://api.coincap.io/v2/assets").then((response) =>
 		response.json().then((apiData) => {
-			apiData.data.forEach(coin => {
-console.log(coin.marketCapUsd)
+		apiData.data.forEach(coin => {
+
 			let marketCR = Math.round(
 					(Number(coin.marketCapUsd) + Number.EPSILON) * 100
 				) / 100

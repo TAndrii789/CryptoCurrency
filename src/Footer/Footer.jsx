@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "./Footer.css";
 
 function Footer() {
@@ -7,13 +8,13 @@ function Footer() {
 	return (
 		<span className="copywright">
 			<p>&copy; cryptoCurrency</p>
-			<a
+			<Link
 				className="copywright-links"
-				href="https://tandrii789.github.io/MyPortfolio/"
+				to="https://tandrii789.github.io/MyPortfolio/"
 			>
 				Portfolio
-			</a>
-			<a className="copywright-links" href="#">Contact</a>
+			</Link>
+			<Link className="copywright-links" to="/">Contact</Link>
 			<p>{year}</p>
 		</span>
 	);

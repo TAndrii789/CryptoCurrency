@@ -5,7 +5,6 @@ import "./Header.css";
 
 function Header() {
 	const searchEl = document.getElementsByClassName("search");
-	const searchBtn = document.getElementsByClassName("search-button");
 
 	function showSearch() {
 		searchEl[0].style.width = "17vw";
@@ -20,7 +19,7 @@ function Header() {
 						<button className="search-button" onClick={() => showSearch()}>
 							<img className="mg-glass" src={mgGlass} />
 						</button>
-						<input className="search" type="text" placeholder="Search" />
+						<input className="search" type="text" placeholder="Search..." />
 					</div>
 					<div className="watchlist-container">
 						<p className="star">

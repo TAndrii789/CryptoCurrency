@@ -36,7 +36,6 @@
 	align-items: center;
 	padding: 0.35vw;
 	background-color: hsl(198, 100%, 45%);
-
 	border-radius: 25vw;
 	transition: border-radius 0.5s ease-in;
 }
@@ -55,6 +54,7 @@
 
 .search::placeholder {
 	color: hsl(198, 100%, 45%);
+	border-bottom: 1px solid hsla(198, 100%, 45%, 0.35);
 }
 
 .search:focus {

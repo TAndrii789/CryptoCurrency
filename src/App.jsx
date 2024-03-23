@@ -1,16 +1,17 @@
-import Header from "./Header/Header.jsx";
-import CountDown from "./CountDown/CountDown.jsx";
-import Table from "./Table/Table.jsx";
-import Footer from "./Footer/Footer.jsx"
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Home from "./Pages/Home";
+import AboutCoin from "./Pages/AboutCoin";
+import Footer from "./Footer/Footer";
 
 function App() {
 	return (
-		<>
-			<Header />
-			<CountDown />
-			<Table/>
-			<Footer/>
-		</>
+		<BrowserRouter>
+			<Routes>
+				<Route path="/" element={<Home />}></Route>
+				<Route path="/about-coin" element={<AboutCoin />}></Route>
+			</Routes>
+			<Footer />
+		</BrowserRouter>
 	);
 }
 
