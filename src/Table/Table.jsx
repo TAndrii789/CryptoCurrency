@@ -14,7 +14,7 @@ function Table() {
 					<p>Market Cap</p>
 					<p>24H Volume</p>
 				</header>
-						<DataFetching />
+					<DataFetching />
 			</div>
 		</div>
 	);
