@@ -7,16 +7,16 @@ import star from "/src/assets/star.png";
 import { DataFromChildContext } from "../Pages/Home.jsx";
 
 function DataFetching() {
-
 	const linkStyle = {
-		display: 'grid',
-		gridTemplateColumns: 'repeat(6, 13vw)',
-		color: 'hsl(198, 100%, 45%)',
-		border: '1px solid hsl(198, 100%, 45%)',
-		paddingLeft: '1vw',
-		marginBottom: '.5vh',
-		padding: '1vw',
-		textDecoration: 'none'
+		display: "grid",
+		gridTemplateColumns: "repeat(6, 13vw)",
+		color: "hsl(198, 100%, 45%)",
+		border: "1px solid hsl(198, 100%, 45%)",
+		paddingLeft: "1vw",
+		marginBottom: ".5vh",
+		padding: "1vw",
+		textDecoration: "none",
+		fontSize: "0.92em",
 	};
 
 	const [isLoading, setIsloading] = useState(false);
@@ -37,14 +37,15 @@ function DataFetching() {
 							let marketCR =
 								Math.round((Number(coin.marketCapUsd) + Number.EPSILON) * 100) /
 								100;
+							let price = Number(coin.priceUsd);
 
 							const newCoin = {
 								rank: coin.rank,
 								symbol: coin.symbol + " ",
 								name: coin.name,
-								price:
-									Math.round((Number(coin.priceUsd) + Number.EPSILON) * 100) /
-									100,
+								price: priceRound(price),
+								// Math.round((Number(coin.priceUsd) + Number.EPSILON) * 100) /
+								// 100,
 								change:
 									Math.round(
 										(Number(coin.changePercent24Hr) + Number.EPSILON) * 100
@@ -63,6 +64,7 @@ function DataFetching() {
 				);
 			} catch (e) {
 				setError(e);
+				console.log(e);
 			} finally {
 				setIsloading(false);
 			}
@@ -86,6 +88,17 @@ function DataFetching() {
 		}
 	};
 
+	const priceRound = function (price) {
+		if (price < 0.0001) {
+			price = Math.round((price + Number.EPSILON) * 10000000) / 10000000;
+		} else if (price < 1 && price > 0.0001) {
+			price = Math.round((price + Number.EPSILON) * 10000) / 10000;
+		} else {
+			price = Math.round((price + Number.EPSILON) * 100) / 100;
+		}
+		return `${price}`;
+	};
+
 	if (isLoading) {
 		return (
 			<div>
@@ -105,12 +118,20 @@ function DataFetching() {
 	return (
 		<ul>
 			{data.map((coin, index) => (
-				<Link key={index} className="currency-element" to="../Pages/AboutCoin.jsx" style={linkStyle}>
+				<Link
+					key={index}
+					className="currency-element"
+					to="../Pages/AboutCoin.jsx"
+					style={linkStyle}
+				>
 					<div className="currency-rank">
 						<img className="table-star" src={star} />
 						{coin.rank}
 					</div>
-					<p className="coin-symbol"><span>{coin.symbol}</span>{coin.name}</p>
+					<p className="coin-symbol">
+						<span>{coin.symbol}</span>
+						{coin.name}
+					</p>
 					<p>{coin.price}</p>
 					<p>{coin.change}</p>
 					<p>{coin.marketCap}</p>
