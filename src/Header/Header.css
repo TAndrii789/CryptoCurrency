@@ -3,6 +3,7 @@
 	align-items: center;
 	justify-content: space-between;
 	height: 8vh;
+	/* background-color: rgb(248, 177, 177); */
 	width: 100vw;
 	padding-top: 0.6vw;
 }
@@ -35,6 +36,7 @@
 	align-items: center;
 	padding: 0.35vw;
 	background-color: hsl(198, 100%, 45%);
+
 	border-radius: 25vw;
 	transition: border-radius 0.5s ease-in;
 }
