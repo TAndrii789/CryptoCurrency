@@ -1,16 +1,14 @@
-.currency-element {
-	display: grid; 
- 	grid-template-columns: repeat(6, 13vw); 
-	border: 1px solid hsl(198, 100%, 45%);
-	padding-left: 1vw;
-}
-
 .currency-rank {
 	display: flex;
 }
 
 .currency-rank img {
 	margin-right: 5px;
+}
+
+.coin-symbol span{
+	color: #323232;
+	font-weight: bold;
 }
 
 .errorDataMessage{

@@ -1,4 +1,5 @@
 import { useEffect, useState, useContext } from "react";
+import { Link } from "react-router-dom";
 import "./DataFetching.css";
 import "../Preloader/Preloader.css";
 import Prelaoder from "../Preloader/Preloader.jsx";
@@ -6,6 +7,18 @@ import star from "/src/assets/star.png";
 import { DataFromChildContext } from "../Pages/Home.jsx";
 
 function DataFetching() {
+
+	const linkStyle = {
+		display: 'grid',
+		gridTemplateColumns: 'repeat(6, 13vw)',
+		color: 'hsl(198, 100%, 45%)',
+		border: '1px solid hsl(198, 100%, 45%)',
+		paddingLeft: '1vw',
+		marginBottom: '.5vh',
+		padding: '1vw',
+		textDecoration: 'none'
+	};
+
 	const [isLoading, setIsloading] = useState(false);
 	const [error, setError] = useState();
 	const [data, setData] = useState([]);
@@ -27,7 +40,8 @@ function DataFetching() {
 
 							const newCoin = {
 								rank: coin.rank,
-								name: coin.symbol + " " + coin.name,
+								symbol: coin.symbol + " ",
+								name: coin.name,
 								price:
 									Math.round((Number(coin.priceUsd) + Number.EPSILON) * 100) /
 									100,
@@ -91,17 +105,17 @@ function DataFetching() {
 	return (
 		<ul>
 			{data.map((coin, index) => (
-				<li key={index} className="currency-element">
+				<Link key={index} className="currency-element" to="../Pages/AboutCoin.jsx" style={linkStyle}>
 					<div className="currency-rank">
 						<img className="table-star" src={star} />
 						{coin.rank}
 					</div>
-					<p>{coin.name}</p>
+					<p className="coin-symbol"><span>{coin.symbol}</span>{coin.name}</p>
 					<p>{coin.price}</p>
 					<p>{coin.change}</p>
 					<p>{coin.marketCap}</p>
 					<p>{coin.volume}</p>
-				</li>
+				</Link>
 			))}
 		</ul>
 	);
