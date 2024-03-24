@@ -19,6 +19,8 @@ function DataFetching() {
 		fontSize: "0.92em",
 	};
 
+	// export const dataFromApi = 
+
 	const [isLoading, setIsloading] = useState(false);
 	const [error, setError] = useState();
 	const [data, setData] = useState([]);
@@ -121,7 +123,7 @@ function DataFetching() {
 				<Link
 					key={index}
 					className="currency-element"
-					to="../Pages/AboutCoin.jsx"
+					to={`/${coin.name}`}
 					style={linkStyle}
 				>
 					<div className="currency-rank">
