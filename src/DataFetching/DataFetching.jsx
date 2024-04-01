@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState, useContext, useMemo } from "react";
 import { Link } from "react-router-dom";
 import "./DataFetching.css";
 import "../Preloader/Preloader.css";
@@ -19,14 +19,19 @@ function DataFetching() {
 		fontSize: "0.92em",
 	};
 
-	// export const dataFromApi = 
-
 	const [isLoading, setIsloading] = useState(false);
 	const [error, setError] = useState();
 	const [data, setData] = useState([]);
 
 	const searchCoin = useContext(DataFromChildContext);
-	console.log(searchCoin);
+
+	const filteredData = useMemo(() => {
+		return data.filter((item) => {
+			let concat = item.name + item.symbol;
+			item = concat;
+			return item.toLowerCase().includes(searchCoin.toLowerCase());
+		});
+	}, [data, searchCoin]);
 
 	useEffect(() => {
 		const fetchCrupto = async () => {
@@ -46,8 +51,6 @@ function DataFetching() {
 								symbol: coin.symbol + " ",
 								name: coin.name,
 								price: priceRound(price),
-								// Math.round((Number(coin.priceUsd) + Number.EPSILON) * 100) /
-								// 100,
 								change:
 									Math.round(
 										(Number(coin.changePercent24Hr) + Number.EPSILON) * 100
@@ -72,6 +75,7 @@ function DataFetching() {
 			}
 		};
 		fetchCrupto();
+		filteredData
 	}, []);
 
 	const roundMarketCap = function (item) {
@@ -119,7 +123,7 @@ function DataFetching() {
 
 	return (
 		<ul>
-			{data.map((coin, index) => (
+			{filteredData.map((coin, index) => (
 				<Link
 					key={index}
 					className="currency-element"

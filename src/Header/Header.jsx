@@ -10,21 +10,29 @@ function Header({ sendDataToParent }) {
 	const inputRef = useRef();
 
 	function showSearch() {
+		// if (searchEl[0].style.width === "0px") {
 		searchEl[0].style.width = "17vw";
-	}
-
-	function handleInputChange(event) {
-		setSearchCoin(event.target.value);
-	}
-
-	function findCoin(event) {
-		if (searchCoin.trim() !== "") {
-		}
+		// }
+		// else {
+		// 	searchEl[0].style.width = "0";
+		// }
 	}
 
 	const sendDataToParentHandler = () => {
 		sendDataToParent(searchCoin);
 	};
+
+	// function handleInputChange(event) {
+	// 	setSearchCoin(event.target.value);
+	// }
+
+	function findCoin(e) {
+		if (searchCoin.length !== 0) {
+			sendDataToParentHandler();
+		}
+		// e.preventDefault();
+		inputRef.current.value = "";
+	}
 
 	return (
 		<>
@@ -35,17 +43,24 @@ function Header({ sendDataToParent }) {
 						<button
 							className="search-button"
 							onClick={() => {
-								showSearch(), findCoin(), sendDataToParentHandler();
+								showSearch();
+								findCoin();
 							}}
 						>
 							<img className="mg-glass" src={mgGlass} />
 						</button>
 						<input
+							ref={inputRef}
 							className="search"
 							type="text"
 							placeholder="Search"
 							value={searchCoin}
-							onChange={handleInputChange}
+							onChange={e=>setSearchCoin(e.target.value)}
+							onKeyDown={(e) => {
+								if (e.key === "Enter") {
+									findCoin(e);
+								}
+							}}
 						/>
 					</div>
 					<div className="watchlist-container">
