@@ -1,22 +1,33 @@
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom"
+import { useLocation, useParams } from "react-router-dom";
 
 const AboutCoin = () => {
+	const { id } = useParams();
 
-  const {id} = useParams();
-  const [coin, setCoin] = useState()
+	let location = useLocation();
+	let data = location.state;
 
-  useEffect(() => {
-    // fetch("https://api.coincap.io/v2/assets")
-   
-  }, [])
-  
-  return (
-   <>
-     <div className="container">Bitcoin{id}</div>
-     <div className="container">Bitcoin{id}</div>
-   </>
-  );
-}
+	const filteredDataFunction = () => {
+		return data.filter((item) => {
+			if (item.name === id) return item;
+		});
+	};
 
-export default AboutCoin
+	let filteredCoin = filteredDataFunction()[0];
+
+	return (
+		<>
+			<div className="container">
+				<p className="coin-symbol">
+					<span>{filteredCoin.symbol}</span>
+					{filteredCoin.name}
+				</p>
+				<p>{filteredCoin.price}</p>
+				<p>{filteredCoin.change}</p>
+				<p>{filteredCoin.marketCap}</p>
+				<p>{filteredCoin.volume}</p>
+			</div>
+		</>
+	);
+};
+
+export default AboutCoin;

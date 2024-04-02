@@ -6,7 +6,7 @@ import Prelaoder from "../Preloader/Preloader.jsx";
 import star from "/src/assets/star.png";
 import { DataFromChildContext } from "../Pages/Home.jsx";
 
-function DataFetching() {
+function DataFetching(sendCoinToParent) {
 	const linkStyle = {
 		display: "grid",
 		gridTemplateColumns: "repeat(6, 13vw)",
@@ -24,6 +24,7 @@ function DataFetching() {
 	const [data, setData] = useState([]);
 
 	const searchCoin = useContext(DataFromChildContext);
+	console.log(searchCoin);
 
 	const filteredData = useMemo(() => {
 		return data.filter((item) => {
@@ -75,7 +76,7 @@ function DataFetching() {
 			}
 		};
 		fetchCrupto();
-		filteredData
+		filteredData;
 	}, []);
 
 	const roundMarketCap = function (item) {
@@ -129,6 +130,7 @@ function DataFetching() {
 					className="currency-element"
 					to={`/${coin.name}`}
 					style={linkStyle}
+					state={ data }
 				>
 					<div className="currency-rank">
 						<img className="table-star" src={star} />

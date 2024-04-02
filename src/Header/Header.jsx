@@ -18,19 +18,8 @@ function Header({ sendDataToParent }) {
 		// }
 	}
 
-	const sendDataToParentHandler = () => {
+	function findCoin() {
 		sendDataToParent(searchCoin);
-	};
-
-	// function handleInputChange(event) {
-	// 	setSearchCoin(event.target.value);
-	// }
-
-	function findCoin(e) {
-		if (searchCoin.length !== 0) {
-			sendDataToParentHandler();
-		}
-		// e.preventDefault();
 		inputRef.current.value = "";
 	}
 
@@ -55,10 +44,13 @@ function Header({ sendDataToParent }) {
 							type="text"
 							placeholder="Search"
 							value={searchCoin}
-							onChange={e=>setSearchCoin(e.target.value)}
+							onChange={(e) => {
+								setSearchCoin(e.target.value);
+								findCoin();
+							}}
 							onKeyDown={(e) => {
 								if (e.key === "Enter") {
-									findCoin(e);
+									// findCoin();
 								}
 							}}
 						/>
