@@ -18,10 +18,11 @@ function Header({ sendDataToParent }) {
 		// }
 	}
 
-	function findCoin() {
-		sendDataToParent(searchCoin);
-		inputRef.current.value = "";
-	}
+	const findCoin = () => {
+		const value = inputRef.current.value;
+		setSearchCoin(value);
+		sendDataToParent(value);
+	};
 
 	return (
 		<>
@@ -33,7 +34,6 @@ function Header({ sendDataToParent }) {
 							className="search-button"
 							onClick={() => {
 								showSearch();
-								findCoin();
 							}}
 						>
 							<img className="mg-glass" src={mgGlass} />
@@ -44,15 +44,7 @@ function Header({ sendDataToParent }) {
 							type="text"
 							placeholder="Search"
 							value={searchCoin}
-							onChange={(e) => {
-								setSearchCoin(e.target.value);
-								findCoin();
-							}}
-							onKeyDown={(e) => {
-								if (e.key === "Enter") {
-									// findCoin();
-								}
-							}}
+							onChange={findCoin}
 						/>
 					</div>
 					<div className="watchlist-container">
