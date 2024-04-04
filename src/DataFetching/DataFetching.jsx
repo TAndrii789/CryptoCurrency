@@ -6,7 +6,7 @@ import Prelaoder from "../Preloader/Preloader.jsx";
 import star from "/src/assets/star.png";
 import { DataFromChildContext } from "../Pages/Home.jsx";
 
-function DataFetching(sendCoinToParent) {
+function DataFetching() {
 	const linkStyle = {
 		display: "grid",
 		gridTemplateColumns: "repeat(6, 13vw)",
