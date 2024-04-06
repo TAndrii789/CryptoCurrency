@@ -1,0 +1,15 @@
+.header-aboutCoin {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  background-color: hsl(198, 100%, 45%);
+  color: #fff;
+  padding: 1vh 0;
+  font-size: 1.5em;
+  user-select: none;
+}
+
+.header-aboutCoin .currentDate {
+  color:hsl(240, 3%, 7%);
+}
