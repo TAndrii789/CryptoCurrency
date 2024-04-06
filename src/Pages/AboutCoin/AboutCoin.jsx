@@ -1,4 +1,6 @@
 import { useLocation, useParams } from "react-router-dom";
+import { FaArrowDown } from 'react-icons/fa';
+import { FaArrowUp  } from 'react-icons/fa';
 import './AboutCoin.css'
 
 const AboutCoin = () => {
@@ -16,10 +18,10 @@ const AboutCoin = () => {
 	let filteredCoin = filteredDataFunction()[0];
 
 	const date = new Date().toLocaleDateString('en-us', {year:"numeric", month:"short", day:"numeric"})
+	const changeFirstChar = Array.from(`${filteredCoin.change}`)[0];
 
-	const changeColor24 = function (){
+	const changeColor24 = () => {
 		let color
-		let changeFirstChar = Array.from(`${filteredCoin.change}`)[0];
 		if (changeFirstChar === '-') {
 			color = 'hsl(351.16deg 84.07% 44.31%)'
 		} else {
@@ -32,6 +34,16 @@ const AboutCoin = () => {
 	const chang24Style = {
 		color: `${changeColor24()}`,
 	}
+
+	const changeArrow = () => {
+		let arrow
+		if (changeFirstChar === '-'){
+			arrow = <FaArrowDown />
+		} else {
+			arrow = <FaArrowUp />
+		}
+		return arrow
+	}
 	
 	return (
 		<>
@@ -40,10 +52,10 @@ const AboutCoin = () => {
 					<span>{filteredCoin.name}</span> ( {filteredCoin.symbol})<br/>
 					<span className="currentDate">{date}</span>
 				</p>
-				<p>Price<br/>{filteredCoin.price}</p>
-				<p>Change(24H)<br/><span style={chang24Style}>{filteredCoin.change}</span></p>
-				<p>Market Cap<br/>{filteredCoin.marketCap}</p>
-				<p>Volume<br/>{filteredCoin.volume}</p>
+				<p className="coin-description">Price<span>${filteredCoin.price}</span></p>
+				<p className="coin-description">Change(24H)<span style={chang24Style}>{filteredCoin.change}{changeArrow()}</span></p>
+				<p className="coin-description">Market Cap<span>${filteredCoin.marketCap}</span></p>
+				<p className="coin-description">Volume<span>${filteredCoin.volume}</span></p>
 			</div>
 		</>
 	);
