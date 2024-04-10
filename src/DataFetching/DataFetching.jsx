@@ -39,8 +39,9 @@ function DataFetching() {
 			setIsloading(true);
 
 			try {
-				await fetch("https://api.coincap.io/v2/assets").then((response) =>
-					response.json().then((apiData) => {
+				await fetch("https://api.coincap.io/v2/assets")
+				.then((response) => response.json()
+				.then((apiData) => {
 						apiData.data.forEach((coin) => {
 							let marketCR =
 								Math.round((Number(coin.marketCapUsd) + Number.EPSILON) * 100) /
@@ -70,7 +71,6 @@ function DataFetching() {
 				);
 			} catch (e) {
 				setError(e);
-				console.log(e);
 			} finally {
 				setIsloading(false);
 			}

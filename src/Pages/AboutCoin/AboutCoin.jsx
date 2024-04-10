@@ -1,7 +1,10 @@
+import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
+import ReactApexChart from 'react-apexcharts'
 import { FaArrowDown } from 'react-icons/fa';
 import { FaArrowUp  } from 'react-icons/fa';
 import './AboutCoin.css'
+import Footer from '../../Footer/Footer.jsx'
 
 const AboutCoin = () => {
 	const { id } = useParams();
@@ -15,7 +18,9 @@ const AboutCoin = () => {
 		});
 	};
 
+
 	let filteredCoin = filteredDataFunction()[0];
+	const symbol = filteredCoin.symbol.trim();
 
 	const date = new Date().toLocaleDateString('en-us', {year:"numeric", month:"short", day:"numeric"})
 	const changeFirstChar = Array.from(`${filteredCoin.change}`)[0];
@@ -29,7 +34,6 @@ const AboutCoin = () => {
 		}
 		return color
 	}
-	console.log(changeColor24())
 
 	const chang24Style = {
 		color: `${changeColor24()}`,
@@ -44,12 +48,79 @@ const AboutCoin = () => {
 		}
 		return arrow
 	}
+
+	const [stockData, setStockData] = useState([])
+	const [error, setError] = useState()
+
+  useEffect(() => {
+		const api_key = '1db1b550c0e73d32474e08ae0d1117d4d685656de38c8e929c3315b44087d863'
+		
+
+    const getStockData = async () => {
+			try {
+				await fetch(`https://min-api.cryptocompare.com/data/v2/histohour?fsym=${symbol}&tsym=USD&limit=24&api_key=${api_key}`)
+			.then(response => response.json())
+			.then((data) => {
+				data.Data.Data.forEach((obj) => {
+					const newObj = {
+						x: new Date(obj.time),
+						y: [
+							obj.open,
+							obj.high,
+							obj.low,
+							obj.close
+						]
+					}
+					setStockData((o) => [...o, newObj])
+				})
+			})
+    } catch (e) {
+			setError(e);
+		}
+	}
+    getStockData()
+  }, [])
+
+	const series = [
+		{
+			data: stockData
+		}
+	];
+
+	const options = {
+		chart: {
+			type: "candlestick",
+			height: 350,
+		},
+		title: {
+			text: `${filteredCoin.name} 24H Chart`,
+			align: "center",
+		},
+		xaxis: {
+			type: "datetime",
+		},
+		yaxis: {
+			tooltip: {
+				enabled: true,
+			},
+		},
+	};
+
+	const widthChart = '70%'
+
+	if (error) {
+		return (
+			<div className="errorDataMessage">
+				Something went wrong! Please try again.
+			</div>
+		);
+	}
 	
 	return (
 		<>
 			<div className="header-aboutCoin">
 				<p className="coin-name">
-					<span>{filteredCoin.name}</span> ( {filteredCoin.symbol})<br/>
+					<span>{filteredCoin.name}</span>({filteredCoin.symbol.trim()})<br/>
 					<span className="currentDate">{date}</span>
 				</p>
 				<p className="coin-description">Price<span>${filteredCoin.price}</span></p>
@@ -57,6 +128,15 @@ const AboutCoin = () => {
 				<p className="coin-description">Market Cap<span>${filteredCoin.marketCap}</span></p>
 				<p className="coin-description">Volume<span>${filteredCoin.volume}</span></p>
 			</div>
+			<div id="chartCoin">
+			<ReactApexChart 
+			series={series} 
+			options={options} 
+			type="candlestick"
+			height={450}
+			width={widthChart} />
+			</div>
+			<Footer />
 		</>
 	);
 };

@@ -34,3 +34,8 @@
 .header-aboutCoin .coin-description span svg{
   margin-left: .1em;
 }
+#chartCoin{
+  margin-top: 5vh;
+  margin-bottom: 5vh;
+  margin-left: calc(20%);
+}
