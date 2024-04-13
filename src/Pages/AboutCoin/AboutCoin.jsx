@@ -58,12 +58,21 @@ const AboutCoin = () => {
 
     const getStockData = async () => {
 			try {
-				await fetch(`https://min-api.cryptocompare.com/data/v2/histohour?fsym=${symbol}&tsym=USD&limit=24&api_key=${api_key}`)
+				await fetch(`https://min-api.cryptocompare.com/data/v2/histohour?fsym=${symbol}&tsym=USD&limit=30&api_key=${api_key}`)
 			.then(response => response.json())
 			.then((data) => {
 				data.Data.Data.forEach((obj) => {
+
+					const formatTime = function(time){
+						const date = time;
+						const formatter = new Intl.DateTimeFormat('en-US', { hour12: false, day: "numeric",  month: "numeric", year:"numeric", hour: "numeric", minute: "numeric", second: "numeric", });
+						const formattedTime = formatter.format(date)
+						return formattedTime
+					}
+						console.log(formatTime(1712671200))
+						console.log(Date(1712671200))
 					const newObj = {
-						x: new Date(obj.time),
+						x: formatTime(obj.time),
 						y: [
 							obj.open,
 							obj.high,
@@ -90,23 +99,32 @@ const AboutCoin = () => {
 	const options = {
 		chart: {
 			type: "candlestick",
-			height: 350,
 		},
 		title: {
 			text: `${filteredCoin.name} 24H Chart`,
 			align: "center",
+			style: {
+				fontSize: '25px',
+				color: 'hsl(198, 100%, 45%)'
+			}
+		},
+		plotOptions: {
+			candlestick: {
+				colors: {
+					upward: 'hsl(115, 100%, 45%)',
+					downward: 'hsl(0, 89%, 49%)'
+				}
+			}
 		},
 		xaxis: {
-			type: "datetime",
-		},
+			type: 'time',
+	},
 		yaxis: {
 			tooltip: {
 				enabled: true,
 			},
 		},
 	};
-
-	const widthChart = '70%'
 
 	if (error) {
 		return (
@@ -134,7 +152,7 @@ const AboutCoin = () => {
 			options={options} 
 			type="candlestick"
 			height={450}
-			width={widthChart} />
+			width={'70%'} />
 			</div>
 			<Footer />
 		</>
