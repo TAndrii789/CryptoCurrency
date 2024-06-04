@@ -24,7 +24,6 @@ function DataFetching() {
 	const [data, setData] = useState([]);
 
 	const searchCoin = useContext(DataFromChildContext);
-	console.log(searchCoin);
 
 	const filteredData = useMemo(() => {
 		return data.filter((item) => {

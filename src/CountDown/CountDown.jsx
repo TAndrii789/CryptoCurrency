@@ -35,7 +35,7 @@ function Core() {
 		if (countDown <= 0) {
 			clearInterval(timerId.current);
 			setTimeout(() => {
-				alert("Bitcoin Reduced Hashrate");
+				// alert("Bitcoin Reduced Hashrate");
 			}, 100);
 		}
 	}, [countDown]);

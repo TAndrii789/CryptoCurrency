@@ -1,3 +1,11 @@
+.container{
+  height: 100vh;
+}
+
+#root{
+  height: 100%;
+}
+
 .header-aboutCoin {
   display: flex;
   flex-direction: row;

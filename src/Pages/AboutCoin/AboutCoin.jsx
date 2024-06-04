@@ -1,10 +1,23 @@
 import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
-import ReactApexChart from 'react-apexcharts'
-import { FaArrowDown } from 'react-icons/fa';
-import { FaArrowUp  } from 'react-icons/fa';
-import './AboutCoin.css'
-import Footer from '../../Footer/Footer.jsx'
+import ReactApexChart from "react-apexcharts";
+import { FaArrowDown } from "react-icons/fa";
+import { FaArrowUp } from "react-icons/fa";
+import "./AboutCoin.css";
+import Footer from "../../Footer/Footer.jsx";
+
+// const formatTime = (time) => {
+// 	let days = Math.floor(time / 60 / 60 / 24);
+// 	let hours = Math.floor((time / 60 / 60) % 24);
+// 	let minutes = Math.floor((time / 60) % 60);
+
+
+// 	if (days < 10) days = "0" + days;
+// 	if (hours < 10) hours = "0" + hours;
+// 	if (minutes < 10) minutes = "0" + minutes;
+	
+// 	return ` ${days} : ${hours} : ${minutes} : ${seconds}`;
+// };
 
 const AboutCoin = () => {
 	const { id } = useParams();
@@ -18,82 +31,95 @@ const AboutCoin = () => {
 		});
 	};
 
-
 	let filteredCoin = filteredDataFunction()[0];
 	const symbol = filteredCoin.symbol.trim();
 
-	const date = new Date().toLocaleDateString('en-us', {year:"numeric", month:"short", day:"numeric"})
+	const date = new Date().toLocaleDateString("en-us", {
+		year: "numeric",
+		month: "short",
+		day: "numeric",
+	});
 	const changeFirstChar = Array.from(`${filteredCoin.change}`)[0];
 
 	const changeColor24 = () => {
-		let color
-		if (changeFirstChar === '-') {
-			color = 'hsl(351.16deg 84.07% 44.31%)'
+		let color;
+		if (changeFirstChar === "-") {
+			color = "hsl(351.16deg 84.07% 44.31%)";
 		} else {
-			color = 'hsl(114.09deg 100% 54.74%)'
+			color = "hsl(114.09deg 100% 54.74%)";
 		}
-		return color
-	}
+		return color;
+	};
 
 	const chang24Style = {
 		color: `${changeColor24()}`,
-	}
+	};
 
 	const changeArrow = () => {
-		let arrow
-		if (changeFirstChar === '-'){
-			arrow = <FaArrowDown />
+		let arrow;
+		if (changeFirstChar === "-") {
+			arrow = <FaArrowDown />;
 		} else {
-			arrow = <FaArrowUp />
+			arrow = <FaArrowUp />;
 		}
-		return arrow
-	}
+		return arrow;
+	};
 
-	const [stockData, setStockData] = useState([])
-	const [error, setError] = useState()
+	const [stockData, setStockData] = useState([]);
+	const [error, setError] = useState();
 
-  useEffect(() => {
-		const api_key = '1db1b550c0e73d32474e08ae0d1117d4d685656de38c8e929c3315b44087d863'
-		
+	useEffect(() => {
+		const api_key =
+			"1db1b550c0e73d32474e08ae0d1117d4d685656de38c8e929c3315b44087d863";
 
-    const getStockData = async () => {
+		const getStockData = async () => {
 			try {
-				await fetch(`https://min-api.cryptocompare.com/data/v2/histohour?fsym=${symbol}&tsym=USD&limit=30&api_key=${api_key}`)
-			.then(response => response.json())
-			.then((data) => {
-				data.Data.Data.forEach((obj) => {
+				await fetch(
+					`https://min-api.cryptocompare.com/data/v2/histohour?fsym=${symbol}&tsym=USD&limit=30&api_key=${api_key}`
+				)
+					.then((response) => response.json())
+					.then((data) => {
+						data.Data.Data.forEach((obj) => {
+							const formatTime = function (time) {
 
-					const formatTime = function(time){
-						const date = time;
-						const formatter = new Intl.DateTimeFormat('en-US', { hour12: false, day: "numeric",  month: "numeric", year:"numeric", hour: "numeric", minute: "numeric", second: "numeric", });
-						const formattedTime = formatter.format(date)
-						return formattedTime
-					}
-						console.log(formatTime(1712671200))
-						console.log(Date(1712671200))
-					const newObj = {
-						x: formatTime(obj.time),
-						y: [
-							obj.open,
-							obj.high,
-							obj.low,
-							obj.close
-						]
-					}
-					setStockData((o) => [...o, newObj])
-				})
-			})
-    } catch (e) {
-			setError(e);
-		}
-	}
-    getStockData()
-  }, [])
+								const date = time *1000;
+								const formatTime = new Date(date)
+								console.log(formatTime.getDate())
+								console.log(formatTime.getMonth())
+								console.log(formatTime.getFullYear())
+
+								const formatter = new Intl.DateTimeFormat("en-US", {
+									hour12: false,
+									day: "numeric",
+									month: "numeric",
+									year: "numeric",
+									hour: "numeric",
+									minute: "numeric",
+									second: "numeric",
+								});
+								const formattedTime = formatter.format(date);
+								return formattedTime;
+							};
+							// console.log(formatTime(1712671200))
+
+							const newObj = {
+								x: formatTime(obj.time),
+								y: [obj.open, obj.high, obj.low, obj.close],
+							};
+							setStockData((o) => [...o, newObj]);
+						});
+					});
+			} catch (e) {
+				setError(e);
+			}
+		};
+		getStockData();
+	}, []);
 
 	const series = [
 		{
-			data: stockData
-		}
+			data: stockData,
+		},
 	];
 
 	const options = {
@@ -104,21 +130,21 @@ const AboutCoin = () => {
 			text: `${filteredCoin.name} 24H Chart`,
 			align: "center",
 			style: {
-				fontSize: '25px',
-				color: 'hsl(198, 100%, 45%)'
-			}
+				fontSize: "25px",
+				color: "hsl(198, 100%, 45%)",
+			},
 		},
 		plotOptions: {
 			candlestick: {
 				colors: {
-					upward: 'hsl(115, 100%, 45%)',
-					downward: 'hsl(0, 89%, 49%)'
-				}
-			}
+					upward: "hsl(115, 100%, 45%)",
+					downward: "hsl(0, 89%, 49%)",
+				},
+			},
 		},
 		xaxis: {
-			type: 'time',
-	},
+			type: "time",
+		},
 		yaxis: {
 			tooltip: {
 				enabled: true,
@@ -133,29 +159,42 @@ const AboutCoin = () => {
 			</div>
 		);
 	}
-	
+
 	return (
-		<>
+		<div className="container">
 			<div className="header-aboutCoin">
 				<p className="coin-name">
-					<span>{filteredCoin.name}</span>({filteredCoin.symbol.trim()})<br/>
+					<span>{filteredCoin.name}</span>({filteredCoin.symbol.trim()})<br />
 					<span className="currentDate">{date}</span>
 				</p>
-				<p className="coin-description">Price<span>${filteredCoin.price}</span></p>
-				<p className="coin-description">Change(24H)<span style={chang24Style}>{filteredCoin.change}{changeArrow()}</span></p>
-				<p className="coin-description">Market Cap<span>${filteredCoin.marketCap}</span></p>
-				<p className="coin-description">Volume<span>${filteredCoin.volume}</span></p>
+				<p className="coin-description">
+					Price<span>${filteredCoin.price}</span>
+				</p>
+				<p className="coin-description">
+					Change(24H)
+					<span style={chang24Style}>
+						{filteredCoin.change}
+						{changeArrow()}
+					</span>
+				</p>
+				<p className="coin-description">
+					Market Cap<span>${filteredCoin.marketCap}</span>
+				</p>
+				<p className="coin-description">
+					Volume<span>${filteredCoin.volume}</span>
+				</p>
 			</div>
 			<div id="chartCoin">
-			<ReactApexChart 
-			series={series} 
-			options={options} 
-			type="candlestick"
-			height={450}
-			width={'70%'} />
+				<ReactApexChart
+					series={series}
+					options={options}
+					type="candlestick"
+					height={450}
+					width={"70%"}
+				/>
 			</div>
 			<Footer />
-		</>
+		</div>
 	);
 };
 
