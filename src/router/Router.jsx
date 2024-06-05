@@ -4,7 +4,7 @@ import NotFound from "../Pages/ErrorPage/ErrorPage";
 import Home from "../Pages/Home";
 import AboutCoin from "../Pages/AboutCoin/AboutCoin";
 import Header from "../Header/Header";
-import Login from "../Login/Login";
+import Login from "../Pages/Login/Login";
 
 export const router = createBrowserRouter([
 	{

@@ -1,0 +1,52 @@
+.loginPage {
+	height: 100vh;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.form-container {
+	height: 60vh;
+	width: 60vw;
+	border: 1px solid black;
+}
+
+.loginForm {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	height: 100%;
+	background-color: hsla(198, 100%, 45%, 0.082);
+}
+
+.loginForm h1,
+.emailInput,
+.passwordInput,
+.submitLink {
+	flex: 1;
+	margin: 1.5vh;
+}
+.loginForm h1 {
+	color: hsl(198, 100%, 45%);
+}
+
+.emailInput,
+.passwordInput {
+	font-size: 1em;
+	padding: 0 5px;
+}
+
+.submitLink {
+	display: flex;
+	text-decoration: none;
+}
+
+.submitBtn {
+	font-size: 1em;
+	padding: 0 5px;
+	margin: 0.5em 1em;
+	background-color: hsl(198, 100%, 45%);
+	color: #fff;
+	border: 2px solid hsla(220, 100%, 45%, 0.422);
+	border-radius: 9px;
+}

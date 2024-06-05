@@ -6,7 +6,6 @@ import "./ErrorPage.css"
 const NotFound = () => {
 
   const linkStyle = {
-    color: 'hsl(198, 100%, 45%,)',
     fontWeight: 'bold',
     fontFamily: 'Georgia, "Times New Roman", Times, serif',
     textDecoration: 'none',

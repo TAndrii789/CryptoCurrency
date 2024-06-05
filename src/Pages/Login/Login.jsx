@@ -5,10 +5,9 @@ import { Link } from "react-router-dom";
 function Login() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
-	const [isAlright, setIsAlright] = useState("");
 
 	const handleSubmit = (event) => {
-		event.preventDefault();
+		// event.preventDefault();
 
 		const formData = { email, password };
 
@@ -26,7 +25,6 @@ function Login() {
 			.catch((error) => {
 				console.log("Error:", error);
 			});
-		setIsAlright("/home");
 	};
 
 	const hadleLink = () => {
@@ -38,12 +36,10 @@ function Login() {
 	console.log(hadleLink());
 
 	return (
-		<>
-			<form className="loginForm" onSubmit={handleSubmit}>
-				<div className="email">
-					<label className="emailLable" htmlFor="email">
-						Your email
-					</label>
+		<div className="loginPage">
+			<div className="form-container">
+				<form className="loginForm" onSubmit={handleSubmit}>
+					<h1>Hello there !</h1>
 					<input
 						type="email"
 						name="email"
@@ -55,11 +51,6 @@ function Login() {
 						onChange={(e) => setEmail(e.target.value)}
 						required
 					/>
-				</div>
-				<div className="password">
-					<label className="passwordLable" htmlFor="password">
-						Your password
-					</label>
 					<input
 						type="password"
 						name="password"
@@ -71,17 +62,18 @@ function Login() {
 						onChange={(e) => setPassword(e.target.value)}
 						required
 					/>
-				</div>
-				<Link className="submitLink" to={hadleLink()}>
-					<button className="submitBtn" type="submit">
-						Sign Up
-					</button>
-					<button className="submitBtn" type="submit">
-						Login In
-					</button>
-				</Link>
-			</form>
-		</>
+
+					<Link className="submitLink" to={hadleLink()} onClick={handleSubmit}>
+						<button className="submitBtn" type="submit">
+							&#8679; Sign Up &#8681;
+						</button>
+						<button className="submitBtn" type="submit">
+							&#8679; Sign In &#8681;
+						</button>
+					</Link>
+				</form>
+			</div>
+		</div>
 	);
 }
 

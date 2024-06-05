@@ -1,4 +1,4 @@
-.copywright {
+.copyright {
 	display: flex;
 	justify-content: space-around;
 	align-items: center;
@@ -7,12 +7,12 @@
 	background-color: hsl(198, 100%, 45%);
 }
 
-.copywright-links {
+.copyright-links {
 	text-decoration: none;
 	color: white;
 }
 
-.copywright-links:hover {
+.copyright-links:hover {
 	color: rgb(0, 43, 107);
 	transition: color 0.3s ease-in-out;
 }

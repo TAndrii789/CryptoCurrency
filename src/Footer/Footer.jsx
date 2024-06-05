@@ -6,15 +6,15 @@ function Footer() {
 	const year = date.getFullYear();
 
 	return (
-		<span className="copywright">
+		<span className="copyright">
 			<p>&copy; cryptoCurrency</p>
 			<Link
-				className="copywright-links"
+				className="copyright-links"
 				to="https://tandrii789.github.io/MyPortfolio/"
 			>
 				Portfolio
 			</Link>
-			<Link className="copywright-links" to="/">Contact</Link>
+			<Link className="copyright-links" to="/">Contact</Link>
 			<p>{year}</p>
 		</span>
 	);
