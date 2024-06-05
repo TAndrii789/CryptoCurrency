@@ -1,4 +1,5 @@
 import "./Login.css";
+import logoImg from "/src/assets/logo.png";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -33,8 +34,6 @@ function Login() {
 		}
 	};
 
-	console.log(hadleLink());
-
 	return (
 		<div className="loginPage">
 			<div className="form-container">
@@ -67,11 +66,16 @@ function Login() {
 						<button className="submitBtn" type="submit">
 							&#8679; Sign Up &#8681;
 						</button>
-						<button className="submitBtn" type="submit">
-							&#8679; Sign In &#8681;
-						</button>
 					</Link>
 				</form>
+				<span className="addition">
+				<img className="logo" src={logoImg} />
+					<h1>Welcome to login</h1>
+					<p>Want to Sign Up ?</p>
+					<button className="submitBtn" type="submit">
+						&#8679; Sign In &#8681;
+					</button>
+				</span>
 			</div>
 		</div>
 	);
