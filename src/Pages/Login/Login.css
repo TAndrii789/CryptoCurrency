@@ -21,15 +21,16 @@
 	height: 100%;
 	width: 100%;
 	background-color: #fff;
+	text-align: center;
 }
 
 .emailInput,
 .passwordInput {
-	margin: 3vh;
+	margin: 2vh;
 }
 .loginForm h1 {
 	color: hsl(198, 100%, 45%);
-	font-size: 3vw;
+	font-size: 4.5vh;
 	margin: 2vh;
 }
 
@@ -37,7 +38,7 @@
 .passwordInput {
 	font-size: 1em;
 	padding: 0 5px;
-	height: 3em;
+	height: 2.5em;
 	border-radius: 50px;
 }
 
