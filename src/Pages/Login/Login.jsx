@@ -94,21 +94,15 @@ function Login() {
 		const formData = { email, password };
 		const authType = signUp ? "hash.php" : "dehash.php";
 
-		console.log("Submitting form with data:", formData);
-		console.log("Auth type:", authType);
-
 		if (signUp) {
 			if (!validateEmail(email)) {
 				setInfo("Invalid email");
-				console.log("Invalid email");
 				return;
 			} else if (password.length < 8) {
 				setInfo("Password must have at least 8 characters");
-				console.log("Password too short");
 				return;
 			} else if (password !== confPassword) {
 				setInfo("Passwords don't match");
-				console.log("Passwords don't match");
 				return;
 			}
 		}
@@ -122,14 +116,14 @@ function Login() {
 				body: JSON.stringify(formData),
 			});
 			const data = await response.json();
-			console.log("Response data:", data);
+
 
 			if (data.status === "success") {
-				console.log("Navigation to /home");
+
 				navigate("/home");
 			} else {
 				setInfo(data.message);
-				console.log(data.message);
+
 			}
 		} catch (error) {
 			setInfo("An error occurred");

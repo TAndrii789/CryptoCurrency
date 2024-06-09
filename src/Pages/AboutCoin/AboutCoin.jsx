@@ -6,19 +6,6 @@ import { FaArrowUp } from "react-icons/fa";
 import "./AboutCoin.css";
 import Footer from "../../Footer/Footer.jsx";
 
-// const formatTime = (time) => {
-// 	let days = Math.floor(time / 60 / 60 / 24);
-// 	let hours = Math.floor((time / 60 / 60) % 24);
-// 	let minutes = Math.floor((time / 60) % 60);
-
-
-// 	if (days < 10) days = "0" + days;
-// 	if (hours < 10) hours = "0" + hours;
-// 	if (minutes < 10) minutes = "0" + minutes;
-	
-// 	return ` ${days} : ${hours} : ${minutes} : ${seconds}`;
-// };
-
 const AboutCoin = () => {
 	const { id } = useParams();
 
@@ -83,10 +70,6 @@ const AboutCoin = () => {
 							const formatTime = function (time) {
 
 								const date = time *1000;
-								const formatTime = new Date(date)
-								console.log(formatTime.getDate())
-								console.log(formatTime.getMonth())
-								console.log(formatTime.getFullYear())
 
 								const formatter = new Intl.DateTimeFormat("en-US", {
 									hour12: false,

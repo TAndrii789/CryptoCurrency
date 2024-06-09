@@ -22,3 +22,12 @@
 	font-weight: bold;
 	background-color: #f1321de8;
 }
+
+.star.filled {
+	color: gold;
+}
+
+.filled {
+	filter: invert(34%) sepia(93%) saturate(2391%) hue-rotate(358deg) brightness(102%) contrast(101%);
+}
+
