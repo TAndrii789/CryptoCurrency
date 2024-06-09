@@ -16,7 +16,7 @@ try {
         // Database connection details
         $servername = "localhost";
         $username = "root";
-        $password_db = ""; 
+        $password_db = "";
         $dbname = "project";
 
         // Create connection
@@ -26,6 +26,18 @@ try {
         if ($conn->connect_error) {
             throw new Exception('Database connection failed: ' . $conn->connect_error);
         }
+
+        // Check if email already exists
+        $stmt = $conn->prepare("SELECT email FROM autorisation WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        $stmt->store_result();
+
+        if ($stmt->num_rows > 0) {
+            throw new Exception('Email already exists');
+        }
+
+        $stmt->close();
 
         // Hash the password using bcrypt
         $hashed_password = password_hash($password, PASSWORD_BCRYPT);

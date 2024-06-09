@@ -1,7 +1,7 @@
 import "./Login.css";
 import logoImg from "/src/assets/logo.png";
-import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const LoginFormComponent = ({
 	email,
@@ -12,7 +12,6 @@ const LoginFormComponent = ({
 	setConfPassword,
 	signUp,
 	handleSubmit,
-	handleLink,
 	handleAuth,
 	info,
 }) => (
@@ -61,26 +60,21 @@ const LoginFormComponent = ({
 			>
 				{info}
 			</p>
-			<button
-				className="submitBtn"
-				id="signIN"
-				type="button"
-				onClick={handleLink}
-			>
-				&#8679; Sign Up &#8681;
+			<button className="submitBtn" id="signIN" type="submit">
+				{signUp ? "Sign Up" : "Sign In"}
 			</button>
 		</form>
 		<span className="addition">
 			<img className="logo" src={logoImg} alt="Logo" />
 			<h1>Welcome to login</h1>
-			<p>Want to Sign Up?</p>
+			<p>Want to {signUp ? "Sign In" : "Sign Up"}?</p>
 			<button
 				className="submitBtn"
 				id="signUP"
 				onClick={handleAuth}
 				type="button"
 			>
-				&#8679; Sign In &#8681;
+				{signUp ? "Sign In" : "Sign Up"}
 			</button>
 		</span>
 	</div>
@@ -90,58 +84,67 @@ function Login() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [confPassword, setConfPassword] = useState("");
-	const [signUp, setSignUp] = useState(false); // Use boolean instead of input element
+	const [signUp, setSignUp] = useState(false);
 	const [info, setInfo] = useState("");
-	const [isValid, setIsValid] = useState(true);
 
 	const navigate = useNavigate();
 
-	const handleSubmit = (event) => {
-		event.preventDefault(); // Prevent default form submission
+	const handleSubmit = async (event) => {
+		event.preventDefault();
 		const formData = { email, password };
-		fetch("http://localhost/project/dehash.php", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(formData),
-		})
-			.then((response) => response.json())
-			.then((data) => {
-				console.log("Success:", data);
-			})
-			.catch((error) => {
-				console.log("Error:", error);
-			});
-	};
+		const authType = signUp ? "hash.php" : "dehash.php";
 
-	useEffect(() => {
-		const infoElement = document.getElementsByClassName("information")[0];
-		if (infoElement) {
-			console.log(infoElement.innerText);
+		console.log("Submitting form with data:", formData);
+		console.log("Auth type:", authType);
+
+		if (signUp) {
+			if (!validateEmail(email)) {
+				setInfo("Invalid email");
+				console.log("Invalid email");
+				return;
+			} else if (password.length < 8) {
+				setInfo("Password must have at least 8 characters");
+				console.log("Password too short");
+				return;
+			} else if (password !== confPassword) {
+				setInfo("Passwords don't match");
+				console.log("Passwords don't match");
+				return;
+			}
 		}
-	}, [email, password]);
+
+		try {
+			const response = await fetch(`http://localhost/project/${authType}`, {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(formData),
+			});
+			const data = await response.json();
+			console.log("Response data:", data);
+
+			if (data.status === "success") {
+				console.log("Navigation to /home");
+				navigate("/home");
+			} else {
+				setInfo(data.message);
+				console.log(data.message);
+			}
+		} catch (error) {
+			setInfo("An error occurred");
+			console.error("Error:", error);
+		}
+	};
 
 	const validateEmail = (email) => {
 		const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 		return emailPattern.test(email);
 	};
 
-	const handleLink = () => {
-		if (!validateEmail(email)) {
-			setInfo("Invalid email");
-		} else if (password.length < 8) {
-			setInfo("Password must have at least 8 characters");
-		} else if (signUp && password !== confPassword) {
-			setInfo("Passwords don't match");
-		} else {
-			setInfo("");
-			navigate("/home");
-		}
-	};
-
 	const handleAuth = () => {
-		setSignUp(true); // Set signUp to true to render "Confirm Password" input
+		setSignUp(!signUp);
+		setInfo(""); // Clear any previous info messages
 	};
 
 	return (
@@ -154,7 +157,6 @@ function Login() {
 				confPassword={confPassword}
 				setConfPassword={setConfPassword}
 				handleSubmit={handleSubmit}
-				handleLink={handleLink}
 				handleAuth={handleAuth}
 				signUp={signUp}
 				info={info}

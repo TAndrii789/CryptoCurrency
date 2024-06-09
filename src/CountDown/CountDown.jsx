@@ -15,7 +15,7 @@ const formatTime = (time) => {
 	return ` ${days} : ${hours} : ${minutes} : ${seconds}`;
 };
 
-const dateHalvingMS = (1713519549104 - Date.now()) / 1000;
+const dateHalvingMS = (1837063920000 - Date.now()) / 1000;
 
 function Core() {
 	const [countDown, setCountDown] = useState(dateHalvingMS);
@@ -52,7 +52,7 @@ function Core() {
 					<p className="days">SECS</p>
 				</div>
 
-				<p className="text">Halving Date ETA: 19 April 2024 8:32 UTC+1</p>
+				<p className="text">Halving Date ETA: 19 April 2028 9:00 UTC+1</p>
 			</div>
 		</div>
 	);
