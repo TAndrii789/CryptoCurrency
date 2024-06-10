@@ -1,5 +1,4 @@
 <?php
-// /xampp/htdocs/project/verify.php
 
 header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: *");
@@ -19,10 +18,8 @@ try {
         $password_db = ""; 
         $dbname = "project";
 
-        // Create connection
         $conn = new mysqli($servername, $username, $password_db, $dbname);
 
-        // Check connection
         if ($conn->connect_error) {
             throw new Exception('Database connection failed: ' . $conn->connect_error);
         }

@@ -1,5 +1,5 @@
 <?php
-// /xampp/htdocs/project/index.php
+
 
 header('Content-Type: application/json');
 header("Access-Control-Allow-Origin: *");
@@ -13,16 +13,13 @@ try {
         $email = $data['email'];
         $password = $data['password'];
 
-        // Database connection details
         $servername = "localhost";
         $username = "root";
         $password_db = "";
         $dbname = "project";
 
-        // Create connection
         $conn = new mysqli($servername, $username, $password_db, $dbname);
 
-        // Check connection
         if ($conn->connect_error) {
             throw new Exception('Database connection failed: ' . $conn->connect_error);
         }
