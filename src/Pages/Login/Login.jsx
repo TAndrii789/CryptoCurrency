@@ -104,31 +104,43 @@ function Login() {
 			} else if (password !== confPassword) {
 				setInfo("Passwords don't match");
 				return;
-			}
-		}
-
-		try {
-			const response = await fetch(`http://localhost/project/${authType}`, {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				},
-				body: JSON.stringify(formData),
-			});
-			const data = await response.json();
-
-
-			if (data.status === "success") {
-
+			}else{
 				navigate("/home");
-			} else {
-				setInfo(data.message);
-
 			}
-		} catch (error) {
-			setInfo("An error occurred");
-			console.error("Error:", error);
+		}else{
+			if (!validateEmail(email)) {
+				setInfo("Invalid email");
+				return;
+			} else if (password.length < 8) {
+				setInfo("Password must have at least 8 characters");
+				return;
+			}else{
+				navigate("/home");
+			}
 		}
+
+		// try {
+		// 	const response = await fetch(`http://localhost/project/${authType}`, {
+		// 		method: "POST",
+		// 		headers: {
+		// 			"Content-Type": "application/json",
+		// 		},
+		// 		body: JSON.stringify(formData),
+		// 	});
+		// 	const data = await response.json();
+
+
+		// 	if (data.status === "success") {
+
+		// 		navigate("/home");
+		// 	} else {
+		// 		setInfo(data.message);
+
+		// 	}
+		// } catch (error) {
+		// 	setInfo("An error occurred");
+		// 	console.error("Error:", error);
+		// }
 	};
 
 	const validateEmail = (email) => {
